@@ -1,11 +1,21 @@
 package com.example.wordplay.service;
 
+import com.example.wordplay.exception.ScrabbleException;
+import com.example.wordplay.helper.ValidatorHelper;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AnagramService {
+
+    ValidatorHelper validatorHelper;
+
+    public AnagramService() {
+        this.validatorHelper = new ValidatorHelper();
+    }
+
     public Set<String> getAllAnagrams(String letters) {
 
         if(letters == null) {
@@ -20,6 +30,10 @@ public class AnagramService {
         Matcher matcher = pattern.matcher(letters);
         if(!matcher.matches()) {
             throw new IllegalArgumentException("Arguments should be a-z A-Z");
+        }
+
+        if(!validatorHelper.isValidDistributionRequest(letters)) {
+            throw new ScrabbleException(letters +" is an INVALID request. ");
         }
 
         Set<String> anagrams = new HashSet<>();
