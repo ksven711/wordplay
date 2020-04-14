@@ -22,9 +22,17 @@ public class ValidatorHelperTest {
     }
 
     @Test
-    public void testLetterCount() {
+    public void testLetterCount_flagIsSetToTrue() {
         validatorHelper.setValidateByLetterCount(true);
         assertThat(validatorHelper.isValidLetterCount("AAA"), is(false));
+        assertThat(validatorHelper.isValidLetterCount("ABCDEFG"), is(true));
+        assertThat(validatorHelper.isValidLetterCount("ABCDEFGH"), is(true));
+    }
+
+    @Test
+    public void testLetterCount_flagIsSetToFalse() {
+        validatorHelper.setValidateByLetterCount(false);
+        assertThat(validatorHelper.isValidLetterCount("AAA"), is(true));
         assertThat(validatorHelper.isValidLetterCount("ABCDEFG"), is(true));
         assertThat(validatorHelper.isValidLetterCount("ABCDEFGH"), is(true));
     }

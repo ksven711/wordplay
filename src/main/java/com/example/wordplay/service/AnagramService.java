@@ -36,6 +36,8 @@ public class AnagramService {
 
 
         if(!validatorHelper.isValidLetterCount(letters)) {
+            //TODO: This will be incorrect if we turn the 7 letters or more validation flag to
+            // false in application.properties
             throw new ScrabbleException(letters +" contains less than 7 characters");
         }
 
@@ -48,13 +50,6 @@ public class AnagramService {
         return anagrams;
     }
 
-/*    public static void main(String... args) {
-        Set<String> words = new HashSet<>();
-        permutation(words, "ABC");
-        for (String word : words) {
-            System.out.println(word);
-        }
-    }*/
 
     public void permutation(Set<String> words, String str) {
         permutation(words, "", str);
