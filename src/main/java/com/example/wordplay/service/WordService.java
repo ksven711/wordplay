@@ -12,6 +12,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+//DOCUMENTATION:
+//loads a dictionary into a map, the key is the dictionary name
+//loads all words in a dictionary
+
 @Service
 public class WordService {
 
@@ -43,10 +47,9 @@ public class WordService {
             URI uri = resource.toURI();
             Path path = Paths.get(uri);
             words = Files.readAllLines(path, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            //TODO: Handle exception correctly
-        } catch (URISyntaxException e) {
-            //TODO: Handle exception correctly
+        } catch (IOException | URISyntaxException e) {
+            //TODO: Handle exceptions correctly
+            e.printStackTrace();
         }
         return words;
     }
