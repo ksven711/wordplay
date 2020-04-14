@@ -2,12 +2,14 @@ package com.example.wordplay.service;
 
 import com.example.wordplay.exception.ScrabbleException;
 import com.example.wordplay.helper.ValidatorHelper;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Service
 public class AnagramService {
 
     ValidatorHelper validatorHelper;
@@ -30,6 +32,11 @@ public class AnagramService {
         Matcher matcher = pattern.matcher(letters);
         if(!matcher.matches()) {
             throw new IllegalArgumentException("Arguments should be a-z A-Z");
+        }
+
+
+        if(!validatorHelper.isValidLetterCount(letters)) {
+            throw new ScrabbleException(letters +" contains less than 7 characters");
         }
 
         if(!validatorHelper.isValidDistributionRequest(letters)) {

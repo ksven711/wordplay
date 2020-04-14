@@ -1,5 +1,6 @@
 package com.example.wordplay.service;
 
+import com.example.wordplay.exception.ScrabbleException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,6 +41,11 @@ public class AnagramServiceTest {
         anagramService.getAllAnagrams("ABCD1234");
         anagramService.getAllAnagrams("12345");
         anagramService.getAllAnagrams("!@#$%^&*()");
+    }
+
+    @Test(expected = ScrabbleException.class)
+    public void getAllAnagrams_invalidDistributionOfLetters() throws Exception {
+        anagramService.getAllAnagrams("AAAAZZZ");
     }
 
     @Test
