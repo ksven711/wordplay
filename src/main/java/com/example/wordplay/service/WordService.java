@@ -1,5 +1,7 @@
 package com.example.wordplay.service;
 
+import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -10,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+@Service
 public class WordService {
 
     public static final Map<String, String> dictionaryMap;
@@ -31,8 +34,7 @@ public class WordService {
         String trimmedDictionaryValue = dictionary.trim();
 
         if(!dictionaryMap.containsKey(trimmedDictionaryValue)) {
-            String errorMessage = KEY_NOT_FOUND_ERR_MESSAGE_PREFIX + trimmedDictionaryValue;
-            throw new IllegalArgumentException(errorMessage);
+            throw new IllegalArgumentException(KEY_NOT_FOUND_ERR_MESSAGE_PREFIX + trimmedDictionaryValue);
         }
 
         String file = dictionaryMap.get(trimmedDictionaryValue);

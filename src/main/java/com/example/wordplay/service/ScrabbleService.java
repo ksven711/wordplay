@@ -1,22 +1,28 @@
 package com.example.wordplay.service;
 
-import com.example.wordplay.exception.ScrabbleException;
-import com.example.wordplay.helper.ValidatorHelper;
 import com.example.wordplay.utilities.CommonUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class ScrabbleService {
 
     WordService wordService;
     AnagramService anagramService;
 
-    public ScrabbleService() {
-        this.wordService = new WordService();
-        this.anagramService = new AnagramService();
+    @Autowired
+    public void setWordService(WordService wordService) {
+        this.wordService = wordService;
+    }
+
+    @Autowired
+    public void setAnagramService(AnagramService anagramService) {
+        this.anagramService = anagramService;
     }
 
     public List<String> getListOfValidWords(String letters, String dictionary) {

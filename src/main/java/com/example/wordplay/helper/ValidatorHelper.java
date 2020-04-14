@@ -1,5 +1,7 @@
 package com.example.wordplay.helper;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +10,13 @@ import java.util.Properties;
 public class ValidatorHelper {
 
     static Map<String, Integer> letterDistribution;
+
+    @Value("${seven.letters.or.more.validation}")
+    boolean validateByLetterCount;
+
+    public void setValidateByLetterCount(boolean validateByLetterCount) {
+        this.validateByLetterCount = validateByLetterCount;
+    }
 
     static {
 
@@ -26,6 +35,15 @@ public class ValidatorHelper {
             letterDistribution.put(key, Integer.valueOf(value));
         }
 
+    }
+
+    public boolean isValidLetterCount(String letters) {
+        if(validateByLetterCount) {
+            if(letters.length() < 7) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean isValidDistributionRequest(String letters) {
