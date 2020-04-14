@@ -50,7 +50,6 @@ public class AnagramService {
         return anagrams;
     }
 
-
     public void permutation(Set<String> words, String str) {
         permutation(words, "", str);
     }
@@ -65,4 +64,5 @@ public class AnagramService {
             }
         }
     }
+
 }

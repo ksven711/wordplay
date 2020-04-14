@@ -1,12 +1,14 @@
 package com.example.wordplay.helper;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+@Service
 public class ValidatorHelper {
 
     static Map<String, Integer> letterDistribution;
