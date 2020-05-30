@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class ScrabbleService {
 
     WordService wordService;
+
     AnagramService anagramService;
 
     @Autowired

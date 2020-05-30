@@ -1,6 +1,7 @@
 package com.example.wordplay.service;
 
 import com.example.wordplay.exception.ScrabbleException;
+import com.example.wordplay.helper.ValidatorHelper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,10 +13,14 @@ import static org.hamcrest.Matchers.is;
 public class AnagramServiceTest {
 
     AnagramService anagramService;
+    ValidatorHelper validatorHelper;
 
     @Before
     public void setUp() throws Exception {
+        validatorHelper = new ValidatorHelper();
+
         anagramService = new AnagramService();
+        anagramService.setValidatorHelper(validatorHelper);
     }
 
     @Test(expected = NullPointerException.class)

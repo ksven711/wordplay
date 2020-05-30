@@ -2,6 +2,7 @@ package com.example.wordplay.service;
 
 import com.example.wordplay.exception.ScrabbleException;
 import com.example.wordplay.helper.ValidatorHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -14,35 +15,36 @@ public class AnagramService {
 
     ValidatorHelper validatorHelper;
 
-    public AnagramService() {
-        this.validatorHelper = new ValidatorHelper();
+    @Autowired
+    public void setValidatorHelper(ValidatorHelper validatorHelper) {
+        this.validatorHelper = validatorHelper;
     }
 
     public Set<String> getAllAnagrams(String letters) {
 
-        if(letters == null) {
+        if (letters == null) {
             throw new NullPointerException("Argument to method is NULL");
         }
         String trimmedLetterString = letters.trim();
-        if(trimmedLetterString.length() < 2) {
+        if (trimmedLetterString.length() < 2) {
             throw new IllegalArgumentException("Argument to the method should be greater than 1");
         }
 
         Pattern pattern = Pattern.compile("^[a-zA-Z]*$");
         Matcher matcher = pattern.matcher(letters);
-        if(!matcher.matches()) {
+        if (!matcher.matches()) {
             throw new IllegalArgumentException("Arguments should be a-z A-Z");
         }
 
 
-        if(!validatorHelper.isValidLetterCount(letters)) {
+        if (!validatorHelper.isValidLetterCount(letters)) {
             //TODO: This will be incorrect if we turn the 7 letters or more validation flag to
             // false in application.properties
-            throw new ScrabbleException(letters +" contains less than 7 characters");
+            throw new ScrabbleException(letters + " contains less than 7 characters");
         }
 
-        if(!validatorHelper.isValidDistributionRequest(letters)) {
-            throw new ScrabbleException(letters +" is an INVALID request. ");
+        if (!validatorHelper.isValidDistributionRequest(letters)) {
+            throw new ScrabbleException(letters + " is an INVALID request. ");
         }
 
         Set<String> anagrams = new HashSet<>();
@@ -60,7 +62,7 @@ public class AnagramService {
             words.add(prefix);
         } else {
             for (int i = 0; i < n; i++) {
-                permutation(words, prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1, n));
+                permutation(words, prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1, n));
             }
         }
     }
