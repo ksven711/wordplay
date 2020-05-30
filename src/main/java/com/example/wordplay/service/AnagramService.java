@@ -4,6 +4,7 @@ import com.example.wordplay.exception.ScrabbleException;
 import com.example.wordplay.helper.ValidatorHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,7 +31,7 @@ public class AnagramService {
             throw new IllegalArgumentException("Argument to the method should be greater than 1");
         }
 
-        Pattern pattern = Pattern.compile("^[a-zA-Z]*$");
+        Pattern pattern = Pattern.compile("^[a-zA-Z?]*$");
         Matcher matcher = pattern.matcher(letters);
         if (!matcher.matches()) {
             throw new IllegalArgumentException("Arguments should be a-z A-Z");
@@ -47,12 +48,41 @@ public class AnagramService {
             throw new ScrabbleException(letters + " is an INVALID request. ");
         }
 
+        System.out.println("LETTERS: " + letters);
+        int numberOfWildcards = StringUtils.countOccurrencesOf(letters, "?");
+        System.out.println("Number of wildcards: " + numberOfWildcards);
+
         Set<String> anagrams = new HashSet<>();
-        permutation(anagrams, letters);
+
+        permutationMain(anagrams, letters);
+        doWildcardSubstitution(anagrams, numberOfWildcards);
+
+        System.out.println("Number of anagrams: " + anagrams.size());
         return anagrams;
     }
 
-    public void permutation(Set<String> words, String str) {
+    private void doWildcardSubstitution(Set<String> anagrams, int numberOfWildcards) {
+
+        if (numberOfWildcards != 0) {
+
+            Set<String> strSet = new HashSet<>();
+
+            for (int i = 0; i < numberOfWildcards; i++) {
+                for (String word : anagrams) {
+                    for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
+                        String wordToAdd = word.replaceFirst("\\?", Character.toString(alphabet));
+                        strSet.add(wordToAdd);
+                    }
+
+                }
+                anagrams.clear();
+                anagrams.addAll(strSet);
+                strSet.clear();
+            }
+        }
+    }
+
+    public void permutationMain(Set<String> words, String str) {
         permutation(words, "", str);
     }
 
@@ -66,5 +96,35 @@ public class AnagramService {
             }
         }
     }
+
+/*
+    public static void main(String... args) {
+        Set<String> baseSet = new HashSet<>();
+        baseSet.add("AB?C?");
+
+        Set<String> strSet = new HashSet<>();
+
+        int numberOfWildcards=2;
+        for (int i = 0; i < numberOfWildcards; i++) {
+            for (String word : baseSet) {
+                for(char alphabet = 'A'; alphabet <='Z'; alphabet++ ) {
+                    String wordToAdd = word.replaceFirst("\\?", Character.toString(alphabet));
+                    strSet.add(wordToAdd);
+                }
+
+            }
+            baseSet.clear();
+            baseSet.addAll(strSet);
+            strSet.clear();
+        }
+
+        System.out.println("size: "+baseSet.size());
+        for (String s : baseSet) {
+            System.out.println(s);
+        }
+
+
+    }
+*/
 
 }
