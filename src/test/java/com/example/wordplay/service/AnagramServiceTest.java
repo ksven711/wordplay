@@ -71,12 +71,12 @@ public class AnagramServiceTest {
         when(validatorHelper.isValidLetterCount(anyString())).thenReturn(true);
         when(validatorHelper.isValidDistributionRequest(anyString())).thenReturn(true);
 
-        assertThat(anagramService.getAllAnagrams("AB").size(), is(greaterThan(0)));
-        assertThat(anagramService.getAllAnagrams("ABC").size(), is(greaterThan(0)));
-        assertThat(anagramService.getAllAnagrams("AAAA").size(), is(greaterThan(0)));
-        assertThat(anagramService.getAllAnagrams("aaa").size(), is(greaterThan(0)));
-        assertThat(anagramService.getAllAnagrams("abCD").size(), is(greaterThan(0)));
-        assertThat(anagramService.getAllAnagrams("aBcDeFG").size(), is(greaterThan(0)));
+        assertThat(anagramService.getAllAnagrams("AB").size(), is(2));
+        assertThat(anagramService.getAllAnagrams("ABC").size(), is(6));
+        assertThat(anagramService.getAllAnagrams("AAAA").size(), is(1));
+        assertThat(anagramService.getAllAnagrams("aaa").size(), is(1));
+        assertThat(anagramService.getAllAnagrams("abCD").size(), is(24));
+        assertThat(anagramService.getAllAnagrams("aBcDeFG").size(), is(5040));
     }
 
     @Test

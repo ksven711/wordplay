@@ -48,6 +48,7 @@ public class AnagramService {
             throw new ScrabbleException(letters + " is an INVALID request. ");
         }
 
+        letters=letters.toUpperCase();
         System.out.println("LETTERS: " + letters);
         int numberOfWildcards = StringUtils.countOccurrencesOf(letters, "?");
         System.out.println("Number of wildcards: " + numberOfWildcards);
