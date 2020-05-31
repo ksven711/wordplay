@@ -49,10 +49,7 @@ public class ScrabbleService {
             System.out.println("Contains less than seven characters");
         }
 
-        if (possibleWordMap.isEmpty()) {
-            possibleWordMap = CommonUtils.createWordMap(possibleWords);
-        }
-
+        possibleWordMap = CommonUtils.createWordMap(possibleWords);
         if (!possibleWords.isEmpty()) {
             result = dictionaryWordMap.get(numberOfLetters).stream()
                     .filter(possibleWordMap.get(numberOfLetters)::contains)
