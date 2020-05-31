@@ -2,6 +2,8 @@ package com.example.wordplay.service;
 
 import com.example.wordplay.exception.ScrabbleException;
 import com.example.wordplay.helper.ValidatorHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -13,6 +15,8 @@ import java.util.regex.Pattern;
 
 @Service
 public class AnagramService {
+
+    Logger logger = LoggerFactory.getLogger(AnagramService.class);
 
     ValidatorHelper validatorHelper;
 
@@ -48,17 +52,17 @@ public class AnagramService {
             throw new ScrabbleException(letters + " is an INVALID request. ");
         }
 
-        letters=letters.toUpperCase();
-        System.out.println("LETTERS: " + letters);
+        letters = letters.toUpperCase();
+        logger.info("LETTERS: " + letters);
         int numberOfWildcards = StringUtils.countOccurrencesOf(letters, "?");
-        System.out.println("Number of wildcards: " + numberOfWildcards);
+        logger.info("Number of wildcards: " + numberOfWildcards);
 
         Set<String> anagrams = new HashSet<>();
 
         permutationMain(anagrams, letters);
         doWildcardSubstitution(anagrams, numberOfWildcards);
 
-        System.out.println("Number of anagrams: " + anagrams.size());
+        logger.info("Number of anagrams: " + anagrams.size());
         return anagrams;
     }
 
@@ -97,35 +101,5 @@ public class AnagramService {
             }
         }
     }
-
-/*
-    public static void main(String... args) {
-        Set<String> baseSet = new HashSet<>();
-        baseSet.add("AB?C?");
-
-        Set<String> strSet = new HashSet<>();
-
-        int numberOfWildcards=2;
-        for (int i = 0; i < numberOfWildcards; i++) {
-            for (String word : baseSet) {
-                for(char alphabet = 'A'; alphabet <='Z'; alphabet++ ) {
-                    String wordToAdd = word.replaceFirst("\\?", Character.toString(alphabet));
-                    strSet.add(wordToAdd);
-                }
-
-            }
-            baseSet.clear();
-            baseSet.addAll(strSet);
-            strSet.clear();
-        }
-
-        System.out.println("size: "+baseSet.size());
-        for (String s : baseSet) {
-            System.out.println(s);
-        }
-
-
-    }
-*/
 
 }

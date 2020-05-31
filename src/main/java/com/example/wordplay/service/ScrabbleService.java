@@ -2,14 +2,19 @@ package com.example.wordplay.service;
 
 import com.example.wordplay.exception.ScrabbleException;
 import com.example.wordplay.utilities.CommonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class ScrabbleService {
+
+    Logger logger = LoggerFactory.getLogger(ScrabbleService.class);
 
     WordService wordService;
 
@@ -44,9 +49,9 @@ public class ScrabbleService {
         try {
             possibleWords = anagramService.getAllAnagrams(letters);
         } catch (IllegalArgumentException ie) {
-            System.out.println("Illegal argument");
+            logger.info("Illegal argument");
         } catch (ScrabbleException se) {
-            System.out.println("Contains less than seven characters");
+            logger.info("Contains less than seven characters");
         }
 
         possibleWordMap = CommonUtils.createWordMap(possibleWords);
